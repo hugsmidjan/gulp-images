@@ -15,6 +15,7 @@ const _plugins = {
   mozjpeg: require('imagemin-mozjpeg'),
   rename: require('gulp-rename'),
   foreach: require('gulp-foreach'),
+  changed: require('gulp-changed'),
 };
 
 module.exports = (opts) => {
@@ -23,6 +24,7 @@ module.exports = (opts) => {
   const compressTask = () => {
     return src(prefixGlobs(opts.glob, opts.src), { base: opts.src })
       .pipe(notifyPipeError())
+      .pipe( _plugins.changed( opts.dist ) )
       .pipe(
         _plugins.foreach((stream, file) => {
           var fileParams = file.path.match(

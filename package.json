@@ -20,9 +20,10 @@
   },
   "dependencies": {
     "@hugsmidjan/gulp-utils": "^0.1",
-    "gulp-rename": "^1.2",
-    "gulp-imagemin": "^2.2",
+    "gulp-changed": "^1.2",
     "gulp-foreach": "^0.1",
+    "gulp-imagemin": "^2.2",
+    "gulp-rename": "^1.2",
     "imagemin-mozjpeg": "5.0.0",
     "imagemin-pngquant": "^4.0"
   }
