@@ -1,0 +1,9 @@
+node_modules
+package-lock.json
+yarn.lock
+yarn-error.log
+npm-debug.log
+
+# Ad-hoc local testing files
+gulpfile.js
+test

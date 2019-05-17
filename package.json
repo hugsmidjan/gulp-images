@@ -1,0 +1,29 @@
+{
+  "name": "@hugsmidjan/gulp-images",
+  "version": "0.1.0",
+  "description": "Image minification gulp task",
+  "main": "gulp-images.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com:hugsmidjan/gulp-images.git"
+  },
+  "author": "Hugsmiðjan ehf. (www.hugsmidjan.is)",
+  "contributors": [
+    "Már Örlygsson <mar@hugsmidjan.is>"
+  ],
+  "license": "ISC",
+  "peerDependencies": {
+    "gulp": "^4"
+  },
+  "dependencies": {
+    "@hugsmidjan/gulp-utils": "^0.1",
+    "gulp-rename": "^1.2",
+    "gulp-imagemin": "^2.2",
+    "gulp-foreach": "^0.1",
+    "imagemin-mozjpeg": "5.0.0",
+    "imagemin-pngquant": "^4.0"
+  }
+}
