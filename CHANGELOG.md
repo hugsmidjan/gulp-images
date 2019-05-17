@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Use chokidar events to speed up watch task
 
 ## 0.1.1
 

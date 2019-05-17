@@ -15,16 +15,14 @@ const _plugins = {
   mozjpeg: require('imagemin-mozjpeg'),
   rename: require('gulp-rename'),
   foreach: require('gulp-foreach'),
-  changed: require('gulp-changed'),
 };
 
 module.exports = (opts) => {
   opts = normalizeOpts(opts, defaultOpts);
 
-  const compressTask = () => {
-    return src(prefixGlobs(opts.glob, opts.src), { base: opts.src })
+  const compress = (files) => {
+    return src(files, { base: opts.src })
       .pipe(notifyPipeError())
-      .pipe( _plugins.changed( opts.dist ) )
       .pipe(
         _plugins.foreach((stream, file) => {
           var fileParams = file.path.match(
@@ -79,10 +77,17 @@ module.exports = (opts) => {
       )
       .pipe(dest(opts.dist));
   };
+  const compressTask = () => compress(prefixGlobs(opts.glob, opts.src));
   compressTask.displayName = opts.name;
 
   const watchTask = () => {
-    watch(prefixGlobs(opts.glob, opts.src), { base: opts.src }, compressTask);
+    // watch(prefixGlobs(opts.glob, opts.src), compressTask);
+
+    // TODO: Consider refactoring this to use something like `gulp-watch` in streaming mode
+    // https://github.com/gulpjs/gulp/blob/master/docs/recipes/rebuild-only-files-that-change.md
+    watch(prefixGlobs(opts.glob, opts.src))
+      .on('change', compress)
+      .on('add', compress);
   };
   watchTask.displayName = opts.name + '_watch';
 
