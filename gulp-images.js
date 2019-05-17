@@ -45,6 +45,7 @@ module.exports = (opts) => {
                 })()
               );
             }
+            console.info('Lossy compressing', file.relative);
             return stream.pipe(
               _plugins.rename((path) => {
                 path.basename = path.basename.slice(0, -fileParams[1].length);
