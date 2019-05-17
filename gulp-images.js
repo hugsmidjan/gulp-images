@@ -82,11 +82,7 @@ module.exports = (opts) => {
   compressTask.displayName = opts.name;
 
   const watchTask = () => {
-    let watchGlobs = opts.glob;
-    if (opts.watchGlob) {
-      watchGlobs = watchGlobs.concat(opts.watchGlob);
-    }
-    watch(prefixGlobs(watchGlobs, opts.src), { base: opts.src }, compressTask);
+    watch(prefixGlobs(opts.glob, opts.src), { base: opts.src }, compressTask);
   };
   watchTask.displayName = opts.name + '_watch';
 
