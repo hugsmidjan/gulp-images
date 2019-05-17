@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.1.2
+
+_2019-05-17_
+
 - feat: Use chokidar events to speed up watch task
 - fix: Console log lossy-compression events outside of `imagemin` code path
 
