@@ -13,7 +13,7 @@ const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
 const mozjpeg = require('imagemin-mozjpeg');
 const rename = require('gulp-rename');
-const foreach = require('gulp-foreach');
+const flatmap = require('gulp-flatmap');
 
 module.exports = (opts) => {
   opts = normalizeOpts(opts, defaultOpts);
@@ -22,25 +22,37 @@ module.exports = (opts) => {
     return src(files, { base: opts.src })
       .pipe(notifyPipeError())
       .pipe(
-        foreach((stream, file) => {
+        flatmap((stream, file) => {
           var fileParams = file.path.match(
             /(---q(\d{1,3}(?:-\d{1,3})?)(?:--d(0))?)\.(png|jpe?g)$/i
           );
           if (fileParams) {
             if (fileParams[4].toLowerCase() === 'png') {
+              const quality = fileParams[2].split('-').map((val) => parseInt(val) / 100);
+              if (quality.length === 1) {
+                quality.push(quality[0]);
+              }
               stream = stream.pipe(
-                pngquant({
-                  speed: 1, // default: `3`
-                  quality: parseInt(fileParams[2], 10), // default `undefined` (i.e. 256 colors)
-                  floyd: parseInt(fileParams[3], 10) / 100,
-                  nofs: fileParams[3] === '0',
-                })()
+                imagemin([
+                  pngquant({
+                    speed: 1, // default: `3`
+                    strip: true,
+                    quality, // default `undefined` (i.e. 256 colors)
+                    dithering: !fileParams[3]
+                      ? undefined
+                      : fileParams[3] === '0'
+                      ? false
+                      : parseInt(fileParams[3]) / 100,
+                  }),
+                ])
               );
             } else {
               stream = stream.pipe(
-                mozjpeg({
-                  quality: fileParams[2],
-                })()
+                imagemin([
+                  mozjpeg({
+                    quality: parseInt(fileParams[2]),
+                  }),
+                ])
               );
             }
             console.info('Lossy compressing', file.relative);
@@ -52,16 +64,17 @@ module.exports = (opts) => {
           } else {
             const hasKeepIdsSuffix = /---ids.svg$/i.test(file.path);
             stream = stream.pipe(
-              imagemin({
-                optimizationLevel: 4, // png
-                progressive: true, // jpg
-                interlaced: true, // gif
-                multipass: true, // svg
-                svgoPlugins:
-                  opts.svg_keepIds || hasKeepIdsSuffix
-                    ? [{ cleanupIDs: false }]
-                    : undefined,
-              })
+              imagemin([
+                imagemin.gifsicle({ interlaced: true }),
+                imagemin.jpegtran({ progressive: true }),
+                imagemin.optipng({ optimizationLevel: 4 }),
+                imagemin.svgo({
+                  plugins:
+                    opts.svg_keepIds || hasKeepIdsSuffix
+                      ? [{ cleanupIDs: false }]
+                      : undefined,
+                }),
+              ])
             );
             if (hasKeepIdsSuffix) {
               stream = stream.pipe(

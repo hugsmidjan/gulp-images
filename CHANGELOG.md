@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- chore: Upgrade dependencies to latest versions
 
 ## 0.1.2
 
