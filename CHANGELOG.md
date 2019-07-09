@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.1.3
+
+_2019-07-09_
+
 - chore: Upgrade dependencies to latest versions
 
 ## 0.1.2
