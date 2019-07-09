@@ -9,13 +9,11 @@ const defaultOpts = {
   // svg_keepIds: false, // Treat all SVG `id=`s as significant content
 };
 
-const _plugins = {
-  imagemin: require('gulp-imagemin'),
-  pngquant: require('imagemin-pngquant'),
-  mozjpeg: require('imagemin-mozjpeg'),
-  rename: require('gulp-rename'),
-  foreach: require('gulp-foreach'),
-};
+const imagemin = require('gulp-imagemin');
+const pngquant = require('imagemin-pngquant');
+const mozjpeg = require('imagemin-mozjpeg');
+const rename = require('gulp-rename');
+const foreach = require('gulp-foreach');
 
 module.exports = (opts) => {
   opts = normalizeOpts(opts, defaultOpts);
@@ -24,14 +22,14 @@ module.exports = (opts) => {
     return src(files, { base: opts.src })
       .pipe(notifyPipeError())
       .pipe(
-        _plugins.foreach((stream, file) => {
+        foreach((stream, file) => {
           var fileParams = file.path.match(
             /(---q(\d{1,3}(?:-\d{1,3})?)(?:--d(0))?)\.(png|jpe?g)$/i
           );
           if (fileParams) {
             if (fileParams[4].toLowerCase() === 'png') {
               stream = stream.pipe(
-                _plugins.pngquant({
+                pngquant({
                   speed: 1, // default: `3`
                   quality: parseInt(fileParams[2], 10), // default `undefined` (i.e. 256 colors)
                   floyd: parseInt(fileParams[3], 10) / 100,
@@ -40,21 +38,21 @@ module.exports = (opts) => {
               );
             } else {
               stream = stream.pipe(
-                _plugins.mozjpeg({
+                mozjpeg({
                   quality: fileParams[2],
                 })()
               );
             }
             console.info('Lossy compressing', file.relative);
             return stream.pipe(
-              _plugins.rename((path) => {
+              rename((path) => {
                 path.basename = path.basename.slice(0, -fileParams[1].length);
               })
             );
           } else {
             const hasKeepIdsSuffix = /---ids.svg$/i.test(file.path);
             stream = stream.pipe(
-              _plugins.imagemin({
+              imagemin({
                 optimizationLevel: 4, // png
                 progressive: true, // jpg
                 interlaced: true, // gif
@@ -67,7 +65,7 @@ module.exports = (opts) => {
             );
             if (hasKeepIdsSuffix) {
               stream = stream.pipe(
-                _plugins.rename((path) => {
+                rename((path) => {
                   path.basename = path.basename.replace(/---ids$/, '');
                 })
               );
