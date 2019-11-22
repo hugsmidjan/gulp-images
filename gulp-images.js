@@ -58,7 +58,7 @@ module.exports = (opts) => {
               );
             }
             console.info('Lossy compressing', file.relative);
-            return stream.pipe(
+            stream = stream.pipe(
               rename((path) => {
                 path.basename = path.basename.slice(0, -fileParams[1].length);
               })
@@ -85,8 +85,8 @@ module.exports = (opts) => {
                 })
               );
             }
-            return stream;
           }
+          return stream;
         })
       )
       .pipe(dest(opts.dist));
