@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Only pass compressible files to imagemin – just copy others
 
 ## 0.1.3
 

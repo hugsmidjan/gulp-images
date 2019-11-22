@@ -15,6 +15,8 @@ const mozjpeg = require('imagemin-mozjpeg');
 const rename = require('gulp-rename');
 const flatmap = require('gulp-flatmap');
 
+const compressExt = /\.(?:svg,png,gif,jpe?g)$/i
+
 module.exports = (opts) => {
   opts = normalizeOpts(opts, defaultOpts);
 
@@ -61,7 +63,7 @@ module.exports = (opts) => {
                 path.basename = path.basename.slice(0, -fileParams[1].length);
               })
             );
-          } else {
+          } else if (compressExt.test(file.path)) {
             const hasKeepIdsSuffix = /---ids.svg$/i.test(file.path);
             stream = stream.pipe(
               imagemin([
