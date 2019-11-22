@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.1.4
+
+_2019-07-22_
+
 - feat: Only pass compressible files to imagemin – just copy others
 
 ## 0.1.3
