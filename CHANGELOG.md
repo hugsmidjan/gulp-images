@@ -6,7 +6,7 @@
 
 ## 0.1.4
 
-_2019-07-22_
+_2019-11-22_
 
 - feat: Only pass compressible files to imagemin – just copy others
 
