@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.1.5
+ 
+_2019-12-10_
+
 - fix: Bad glob pattern
 
 ## 0.1.4
