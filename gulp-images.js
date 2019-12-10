@@ -15,7 +15,7 @@ const mozjpeg = require('imagemin-mozjpeg');
 const rename = require('gulp-rename');
 const flatmap = require('gulp-flatmap');
 
-const compressExt = /\.(?:svg,png,gif,jpe?g)$/i
+const compressExt = /\.(?:svg|png|gif|jpe?g)$/i;
 
 module.exports = (opts) => {
   opts = normalizeOpts(opts, defaultOpts);
