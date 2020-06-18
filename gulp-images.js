@@ -7,6 +7,7 @@ const defaultOpts = {
   dist: 'pub/',
   glob: ['i/**/*', '!i/_raw/**'], // which files to glob up as entry points
   // svg_keepIds: false, // Treat all SVG `id=`s as significant content
+  // svgoRules: {}, // SVGO settings (https://github.com/svg/svgo#what-it-can-do)
 };
 
 const imagemin = require('gulp-imagemin');
@@ -73,8 +74,8 @@ module.exports = (opts) => {
                 imagemin.svgo({
                   plugins:
                     opts.svg_keepIds || hasKeepIdsSuffix
-                      ? [{ cleanupIDs: false }]
-                      : undefined,
+                      ? [{ ...opts.svgoRules, cleanupIDs: false }]
+                      : [opts.svgoRules],
                 }),
               ])
             );

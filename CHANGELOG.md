@@ -3,9 +3,10 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Add `svgoRules` option
 
 ## 0.1.5
- 
+
 _2019-12-10_
 
 - fix: Bad glob pattern
