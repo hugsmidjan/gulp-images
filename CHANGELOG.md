@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.1.6
+
+_2020-06-18_
+
 - feat: Add `svgoRules` option
 
 ## 0.1.5
