@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.1.7
+
+_2020-08-12_
+
 - fix: Default to retaining the viewBox attribute on SVG images
 
 ## 0.1.6
