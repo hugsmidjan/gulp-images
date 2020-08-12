@@ -66,17 +66,21 @@ module.exports = (opts) => {
             );
           } else if (compressExt.test(file.path)) {
             const hasKeepIdsSuffix = /---ids.svg$/i.test(file.path);
+            const svgoRules = {
+              removeViewBox: false,
+              removeDimensions: true,
+              ...opts.svgoRules,
+            };
+            if (opts.svg_keepIds || hasKeepIdsSuffix) {
+              svgoRules.cleanupIDs = false;
+            }
+
             stream = stream.pipe(
               imagemin([
                 imagemin.gifsicle({ interlaced: true }),
                 imagemin.jpegtran({ progressive: true }),
                 imagemin.optipng({ optimizationLevel: 4 }),
-                imagemin.svgo({
-                  plugins:
-                    opts.svg_keepIds || hasKeepIdsSuffix
-                      ? [{ ...opts.svgoRules, cleanupIDs: false }]
-                      : [opts.svgoRules],
-                }),
+                imagemin.svgo({ plugins: [svgoRules] }),
               ])
             );
             if (hasKeepIdsSuffix) {
