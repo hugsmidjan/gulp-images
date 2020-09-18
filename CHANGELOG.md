@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.1.8
+
+_2020-09-18_
+
 - fix: Correctly apply svgo plugins as array of single-key objects. o_O
 
 ## 0.1.7
