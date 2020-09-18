@@ -80,7 +80,11 @@ module.exports = (opts) => {
                 imagemin.gifsicle({ interlaced: true }),
                 imagemin.jpegtran({ progressive: true }),
                 imagemin.optipng({ optimizationLevel: 4 }),
-                imagemin.svgo({ plugins: [svgoRules] }),
+                imagemin.svgo({
+                  plugins: Object.keys(svgoRules).map((key) => ({
+                    [key]: svgoRules[key],
+                  })),
+                }),
               ])
             );
             if (hasKeepIdsSuffix) {
