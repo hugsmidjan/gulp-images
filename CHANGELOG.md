@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Update deps for more reliable modern node version support
 
 ## 0.1.8
 

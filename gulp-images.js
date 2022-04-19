@@ -54,6 +54,7 @@ module.exports = (opts) => {
                 imagemin([
                   mozjpeg({
                     quality: parseInt(fileParams[2]),
+                    progressive: true,
                   }),
                 ])
               );
