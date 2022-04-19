@@ -9,10 +9,6 @@ const defaultOpts = {
   // svg_keepIds: false, // Treat all SVG `id=`s as significant content
   // svgoRules: {}, // SVGO settings (https://github.com/svg/svgo#what-it-can-do)
 };
-
-const imagemin = require('gulp-imagemin');
-const pngquant = require('imagemin-pngquant');
-const mozjpeg = require('imagemin-mozjpeg');
 const rename = require('gulp-rename');
 const flatmap = require('gulp-flatmap');
 
@@ -21,7 +17,17 @@ const compressExt = /\.(?:svg|png|gif|jpe?g)$/i;
 module.exports = (opts) => {
   opts = normalizeOpts(opts, defaultOpts);
 
-  const compress = (files) => {
+  const compress = (files) => Promise.all([
+    import('gulp-imagemin'),
+    import('imagemin-pngquant'),
+  ]).then((exports) => {
+    const imagemin = exports[0].default;
+    const gifsicle = exports[0].gifsicle;
+    const mozjpeg = exports[0].mozjpeg;
+    const optipng = exports[0].optipng;
+    const svgo = exports[0].svgo;
+    const pngquant = exports[1].default;
+
     return src(files, { base: opts.src })
       .pipe(notifyPipeError())
       .pipe(
@@ -78,12 +84,13 @@ module.exports = (opts) => {
 
             stream = stream.pipe(
               imagemin([
-                imagemin.gifsicle({ interlaced: true }),
-                imagemin.jpegtran({ progressive: true }),
-                imagemin.optipng({ optimizationLevel: 4 }),
-                imagemin.svgo({
-                  plugins: Object.keys(svgoRules).map((key) => ({
-                    [key]: svgoRules[key],
+                gifsicle({ interlaced: true }),
+                mozjpeg({ progressive: true }),
+                optipng({ optimizationLevel: 4 }),
+                svgo({
+                  plugins: Object.keys(svgoRules).map((name) => ({
+                    name,
+                    active: svgoRules[name],
                   })),
                 }),
               ])
@@ -100,7 +107,7 @@ module.exports = (opts) => {
         })
       )
       .pipe(dest(opts.dist));
-  };
+  });
   const compressTask = () => compress(prefixGlobs(opts.glob, opts.src));
   compressTask.displayName = opts.name;
 
