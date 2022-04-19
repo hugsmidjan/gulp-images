@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.2.0
+
+_2022-04-19_
+
 - feat: Update deps for more reliable modern node version support
 
 ## 0.1.8
