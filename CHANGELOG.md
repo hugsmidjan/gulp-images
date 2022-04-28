@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.2.2
+
+_2022-04-28_
+
 - fix: Task ended before all images had been compressed
 
 ## 0.2.0 — 0.2.1
