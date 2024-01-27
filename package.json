@@ -1,6 +1,6 @@
 {
   "name": "@hugsmidjan/gulp-images",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Image minification gulp task",
   "main": "gulp-images.js",
   "scripts": {

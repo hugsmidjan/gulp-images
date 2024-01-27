@@ -3,6 +3,10 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+## 0.2.3
+
+_2024-01-27_
+
 - feat: Make watch task return a node `FSWatcher` object
 
 ## 0.2.2
