@@ -116,7 +116,7 @@ module.exports = (opts) => {
   const compressTask = () => compress(prefixGlobs(opts.glob, opts.src));
   compressTask.displayName = opts.name;
 
-  const watchTask = () => {
+  const watchTask = () => 
     // watch(prefixGlobs(opts.glob, opts.src), compressTask);
 
     // TODO: Consider refactoring this to use something like `gulp-watch` in streaming mode
@@ -124,7 +124,7 @@ module.exports = (opts) => {
     watch(prefixGlobs(opts.glob, opts.src))
       .on('change', compress)
       .on('add', compress);
-  };
+  ;
   watchTask.displayName = opts.name + '_watch';
 
   const ret = [compressTask, watchTask];
